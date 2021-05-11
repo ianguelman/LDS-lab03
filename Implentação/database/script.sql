@@ -1,0 +1,34 @@
+CREATE TABLE Aluno (
+	login TEXT(15) NOT NULL,
+	senha TEXT(15) NOT NULL,
+	email TEXT(255) NOT NULL,
+	cpf TEXT(11) NOT NULL PRIMARY KEY,
+	rg TEXT(8) NOT NULL,
+	endereco TEXT(255) NOT NULL,
+	instituicaoEnsino TEXT(255) NOT NULL,
+	curso TEXT(255) NOT NULL
+);
+
+CREATE TABLE Professor (
+	login TEXT(15) NOT NULL,
+	senha TEXT(15) NOT NULL,
+	cpf TEXT(11) NOT NULL,
+	instituicaoEnsino TEXT(255) NOT NULL,
+	departamento TEXT(255) NOT NULL
+);
+
+CREATE TABLE Vantagem (
+	custo REAL NOT NULL,
+	descricao TEXT(500) NOT NULL,
+	foto TEXT(255),
+	codigo INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	codigoEmpresa INTEGER NOT NULL,
+	FOREIGN KEY(codigoEmpresa) REFERENCES Empresa(codigo)
+);
+
+CREATE TABLE Empresa (
+	cnpj TEXT(14) NOT NULL,
+	nome TEXT(255) NOT NULL,
+	vantagens INTEGER NOT NULL,
+	codigo INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT
+);
