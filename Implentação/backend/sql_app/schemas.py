@@ -1,10 +1,6 @@
 from typing import List, Optional
 
-
 from pydantic import BaseModel
-
-
-
 
 class AlunoBase(BaseModel):
     cpf: str
@@ -16,13 +12,8 @@ class AlunoBase(BaseModel):
     instituicaoEnsino: str
     curso: str
 
-
-
-
 class AlunoCreate(AlunoBase):
     pass
-
-
 
 class Aluno(AlunoBase):
     cpf: str
