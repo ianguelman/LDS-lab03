@@ -29,9 +29,6 @@ def get_db():
 
 @app.post("/alunos/")
 def create_aluno(aluno: schemas.AlunoCreate, db: Session = Depends(get_db)):
-    # db_user = crud.get_user_by_email(db, email=user.email)
-    # if db_user:
-    #     raise HTTPException(status_code=400, detail="Email already registered")
     return crud.create_aluno(db=db, aluno=aluno)
 
 
