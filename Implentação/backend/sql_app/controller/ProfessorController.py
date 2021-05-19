@@ -1,17 +1,18 @@
 from sqlalchemy.orm import Session
 
-from . import models, schemas
+from ..models import ProfessorModel
+from ..models.schemas import ProfessorSchema
 
-def get_professors(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.professor).offset(skip).limit(limit).all()
+def get_professores(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(ProfessorModel.Professor).offset(skip).limit(limit).all()
 
-def create_professor(db: Session, professor: schemas.professorCreate):
-    db_professor = models.professor(
+def create_professor(db: Session, professor: ProfessorSchema.ProfessorCreate):
+    db_professor = ProfessorModel.Professor(
         cpf = professor.cpf,
         login = professor.login, 
         senha = professor.senha,
         instituicaoEnsino = professor.instituicaoEnsino,
-        dpartamento = professor.dpartamento,
+        departamento = professor.departamento,
     )
     db.add(db_professor)
     db.commit()

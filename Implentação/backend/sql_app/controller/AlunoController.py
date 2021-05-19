@@ -1,12 +1,13 @@
 from sqlalchemy.orm import Session
 
-from . import models, schemas
+from ..models import AlunoModel
+from ..models.schemas import AlunoSchema
 
 def get_alunos(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Aluno).offset(skip).limit(limit).all()
+    return db.query(AlunoModel.Aluno).offset(skip).limit(limit).all()
 
-def create_aluno(db: Session, aluno: schemas.AlunoCreate):
-    db_aluno = models.Aluno(
+def create_aluno(db: Session, aluno: AlunoSchema.AlunoCreate):
+    db_aluno = AlunoModel.Aluno(
         cpf = aluno.cpf,
         login = aluno.login,
         email = aluno.email,

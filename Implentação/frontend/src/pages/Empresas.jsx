@@ -3,32 +3,32 @@ import { TextField, Card, Paper, Typography, Button } from '@material-ui/core';
 import './Default.sass';
 import api from '../api';
 
-export default function Alunos() {
-    const [alunos, setAlunos] = useState([]);
+export default function Empresas() {
+    const [empresas, setEmpresas] = useState([]);
 
-    async function getAlunos() {
+    async function getEmpresas() {
         try {
-            const response = await api.get('/alunos');
-            setAlunos(response.data);
+            const response = await api.get('/empresas');
+            setEmpresas(response.data);
         } catch {
-            window.alert('Erro ao retornar os dados dos alunos');
+            window.alert('Erro ao retornar os dados dos empresas');
         }
     }
     useEffect(() => {
         async function didMount() {
-            await getAlunos();
+            await getEmpresas();
         }
         didMount();
     }, []);
     return (
-        <div className="alunos">
+        <div className="empresas">
             {
-                alunos.map((aluno) => (
+                empresas.map((empresa) => (
                     <Card className="flex-to-start account-card" elevation={10}>
                         <div className="new-experience">
                             <Typography color="primary" variant="h6" align="left">
                                 {
-                                "CPF: " + aluno.cpf
+                                "CNPJ: " + empresa.cnpj
                                 }
                             </Typography>
                         </div>
@@ -36,7 +36,7 @@ export default function Alunos() {
                         <div className="new-experience">
                             <Typography color="primary" variant="h6" align="left">
                                 {
-                                "Login: " + aluno.login
+                                "Nome: " + empresa.nome
                                 }
                             </Typography>
                         </div>
@@ -44,7 +44,7 @@ export default function Alunos() {
                         <div className="new-experience">
                             <Typography color="primary" variant="h6" align="left">
                                 {
-                                "Email: " + aluno.email
+                                "Vantagens: " + empresa.vantagens
                                 }
                             </Typography>
                         </div>
@@ -52,31 +52,7 @@ export default function Alunos() {
                         <div className="new-experience">
                             <Typography color="primary" variant="h6" align="left">
                                 {
-                                "RG: " + aluno.rg
-                                }
-                            </Typography>
-                        </div>
-
-                        <div className="new-experience">
-                            <Typography color="primary" variant="h6" align="left">
-                                {
-                                "Endereco: " +  aluno.endereco
-                                }
-                            </Typography>
-                        </div>
-
-                        <div className="new-experience">
-                            <Typography color="primary" variant="h6" align="left">
-                                {
-                                "Instituição de Ensino: " + aluno.instituicaoEnsino
-                                }
-                            </Typography>
-                        </div>
-
-                        <div className="new-experience">
-                            <Typography color="primary" variant="h6" align="left">
-                                {
-                                "Curso: " + aluno.curso
+                                "Código: " + empresa.codigo
                                 }
                             </Typography>
                         </div>

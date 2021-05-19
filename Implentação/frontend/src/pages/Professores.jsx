@@ -3,32 +3,32 @@ import { TextField, Card, Paper, Typography, Button } from '@material-ui/core';
 import './Default.sass';
 import api from '../api';
 
-export default function Alunos() {
-    const [alunos, setAlunos] = useState([]);
+export default function Professores() {
+    const [professores, setProfessores] = useState([]);
 
-    async function getAlunos() {
+    async function getProfessores() {
         try {
-            const response = await api.get('/alunos');
-            setAlunos(response.data);
+            const response = await api.get('/professores');
+            setProfessores(response.data);
         } catch {
-            window.alert('Erro ao retornar os dados dos alunos');
+            window.alert('Erro ao retornar os dados dos professores');
         }
     }
     useEffect(() => {
         async function didMount() {
-            await getAlunos();
+            await getProfessores();
         }
         didMount();
     }, []);
     return (
-        <div className="alunos">
+        <div className="professores">
             {
-                alunos.map((aluno) => (
+                professores.map((professores) => (
                     <Card className="flex-to-start account-card" elevation={10}>
                         <div className="new-experience">
                             <Typography color="primary" variant="h6" align="left">
                                 {
-                                "CPF: " + aluno.cpf
+                                "Login: " + professores.login
                                 }
                             </Typography>
                         </div>
@@ -36,7 +36,7 @@ export default function Alunos() {
                         <div className="new-experience">
                             <Typography color="primary" variant="h6" align="left">
                                 {
-                                "Login: " + aluno.login
+                                "CPF: " + professores.cpf
                                 }
                             </Typography>
                         </div>
@@ -44,7 +44,7 @@ export default function Alunos() {
                         <div className="new-experience">
                             <Typography color="primary" variant="h6" align="left">
                                 {
-                                "Email: " + aluno.email
+                                "Intituição: " + professores.instituicaoEnsino
                                 }
                             </Typography>
                         </div>
@@ -52,31 +52,7 @@ export default function Alunos() {
                         <div className="new-experience">
                             <Typography color="primary" variant="h6" align="left">
                                 {
-                                "RG: " + aluno.rg
-                                }
-                            </Typography>
-                        </div>
-
-                        <div className="new-experience">
-                            <Typography color="primary" variant="h6" align="left">
-                                {
-                                "Endereco: " +  aluno.endereco
-                                }
-                            </Typography>
-                        </div>
-
-                        <div className="new-experience">
-                            <Typography color="primary" variant="h6" align="left">
-                                {
-                                "Instituição de Ensino: " + aluno.instituicaoEnsino
-                                }
-                            </Typography>
-                        </div>
-
-                        <div className="new-experience">
-                            <Typography color="primary" variant="h6" align="left">
-                                {
-                                "Curso: " + aluno.curso
+                                "Departamento: " + professores.departamento
                                 }
                             </Typography>
                         </div>

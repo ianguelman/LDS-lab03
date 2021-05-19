@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import { TextField, Card, Paper, Typography, Button } from '@material-ui/core';
-import './AlunosRegister.sass'
+import './Register.sass'
 
 import api from '../api';
 

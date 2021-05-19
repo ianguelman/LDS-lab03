@@ -8,7 +8,7 @@ class Empresa(Base):
 
     cnpj = Column(String, index=True)
     nome = Column(String)
-    vantages = Column(Integer)
+    vantagens = Column(Integer)
     codigo = Column(Integer, primary_key=True, index=True)
     # owner_id = Column(Integer, ForeignKey("users.id"))
 
