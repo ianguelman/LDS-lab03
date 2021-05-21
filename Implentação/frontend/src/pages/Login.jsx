@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react'
-
+import React, { useState, useEffect } from 'react';
 import { TextField, Card, Typography, Button } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
@@ -12,7 +11,7 @@ export default function Login() {
     const usertypes = [
         { title: 'Aluno', type: 'aluno' },
         { title: 'Professor', type: 'professor' },
-        { title: 'Empresa', type: 'empresa' }
+        { title: 'Empresa', type: 'empresa' },
     ]
 
     const [value, setValue] = React.useState(usertypes[0]);
@@ -25,12 +24,28 @@ export default function Login() {
             tipo: ""
         }
     );
+    function typeIsValid(currentType) {
+        return usertypes.filter((optionType) => currentType === optionType.type);
+    }
+    function verifyEmptyField(text) {
+        return text === "";
+    }
     async function handleStoreUser(e) {
         e.preventDefault();
+        if (!typeIsValid()) {
+            window.alert("Selecione uma entidade válida um aluno um professor ou uma empresa!");
+            return;
+        }
+        if (verifyEmptyField(user.login) || verifyEmptyField(user.password)) {
+            window.alert("campos vazios");
+            return;
+        }
         try {
-            await api.post('/login', user);
-            window.alert("Usuário logado com sucesso!");
-            window.location.href = '/saldo';
+            const response = await api.post('/login', user);
+            if (response.data.response === "true") {
+                window.alert("Usuário logado com sucesso!");
+                window.location.href = '/saldo';
+            } 
         } catch {
             window.alert("Erro no login!");
         }
@@ -50,22 +65,18 @@ export default function Login() {
                     <TextField
                         variant="outlined"
                         placeholder="Senha"
-                        value={user.senha}
-                        onChange={(e) => setUser({ ...user, senha: e.target.value })}
+                        value={user.password}
+                        onChange={(e) => setUser({ ...user, password: e.target.value })}
                     />
                     <Autocomplete
                         id="user-tipo"
                         options={usertypes}
-                        getOptionLabel={(usertypes) => usertypes.title}
-                        value={value}
-                        onChange={(event, newValue) => {
-                            setValue(newValue)
-                            setUser({ ...user, tipo: value.type })
-                        }}
-                        inputValue={inputValue}
-                        onInputChange={(event, newInputValue) => {
-                            setInputValue(newInputValue)
-                            setUser({ ...user, tipo: value.type })
+                        getOptionLabel={(usertype) => usertype.type}
+                        onChange={(_, content) => {
+                            if (content) {
+                                setUser({ ...user, tipo: `${(content ? content.type : '')}`});
+                                setValue(content);
+                            }
                         }}
                         renderInput={(params) => <TextField {...params} label="Selecionar tipo" variant="outlined" />}
                         />

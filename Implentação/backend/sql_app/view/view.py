@@ -3,11 +3,11 @@ from typing import List
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import Depends, FastAPI
 from sqlalchemy.orm import Session
-from ..controller import AlunoController, EmpresaController, ProfessorController, VantagemController
+from ..controller import AlunoController, EmpresaController, ProfessorController, VantagemController, TransacaoController
 from ..database import SessionLocal, engine
 
-from ..models import AlunoModel, EmpresaModel, ProfessorModel, VantagemModel
-from ..models.schemas import AlunoSchema, EmpresaSchema, ProfessorSchema, VantagemSchema
+from ..models import AlunoModel, EmpresaModel, ProfessorModel, VantagemModel, TransacaoModel
+from ..models.schemas import AlunoSchema, EmpresaSchema, ProfessorSchema, VantagemSchema, TransacaoSchema
 
 from .User import User
 
@@ -15,6 +15,7 @@ AlunoModel.Base.metadata.create_all(bind=engine)
 EmpresaModel.Base.metadata.create_all(bind=engine)
 ProfessorModel.Base.metadata.create_all(bind=engine)
 VantagemModel.Base.metadata.create_all(bind=engine)
+TransacaoModel.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
@@ -84,5 +85,9 @@ def login(user: User, db: Session = Depends(get_db)):
             return {'response':'true'}
             
     return {'response':'false'}
+
+@app.post("/transacao/")
+def transacao(transacao: TransacaoSchema.TransacaoCreate, db: Session = Depends(get_db)):
+   return TransacaoController.create_transacao(db, transacao)
 
     
