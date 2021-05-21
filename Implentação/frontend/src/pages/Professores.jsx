@@ -56,6 +56,14 @@ export default function Professores() {
                                 }
                             </Typography>
                         </div>
+
+                        <div className="new-experience">
+                            <Typography color="primary" variant="h6" align="left">
+                                {
+                                "Saldo: " + professores.saldo
+                                }
+                            </Typography>
+                        </div>
                     </Card> 
                 ))
             }

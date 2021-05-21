@@ -59,6 +59,12 @@ export default function ProfessoresRegister() {
                         value={professor.senha}
                         onChange={(e) => setProfessor({ ...professor, senha: e.target.value })}
                     />
+                    <TextField
+                        variant="outlined"
+                        placeholder="Saldo"
+                        value={professor.saldo}
+                        onChange={(e) => setProfessor({ ...professor, saldo: e.target.value })}
+                    />
 
                     <Button color="primary" type="submit"align="center">REGISTRAR</Button>
                 </form>

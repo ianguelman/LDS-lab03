@@ -9,6 +9,8 @@ from ..database import SessionLocal, engine
 from ..models import AlunoModel, EmpresaModel, ProfessorModel, VantagemModel
 from ..models.schemas import AlunoSchema, EmpresaSchema, ProfessorSchema, VantagemSchema
 
+from .User import User
+
 AlunoModel.Base.metadata.create_all(bind=engine)
 EmpresaModel.Base.metadata.create_all(bind=engine)
 ProfessorModel.Base.metadata.create_all(bind=engine)
@@ -68,3 +70,19 @@ def create_vantagem(vantagem: VantagemSchema.VantagemCreate, db: Session = Depen
 def read_vantagens(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     vantagens = VantagemController.get_vantagens(db, skip=skip, limit=limit)
     return vantagens
+
+@app.post("/login/")
+def login(user: User, db: Session = Depends(get_db)):
+    if user.tipo == 'professor':
+        data = ProfessorController.get_professores(db, skip=0, limit=100)
+    elif user.tipo == 'aluno':
+        data = AlunoController.get_alunos(db, skip=0, limit=100)
+    # elif user.tipo == 'empresa':
+
+    for item in data:
+        if item.login == user.login and item.senha == user.password:
+            return {'response':'true'}
+            
+    return {'response':'false'}
+
+    

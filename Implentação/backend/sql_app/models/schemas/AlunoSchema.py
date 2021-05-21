@@ -11,6 +11,7 @@ class AlunoBase(BaseModel):
     endereco: str
     instituicaoEnsino: str
     curso: str
+    saldo: int
 
 class AlunoCreate(AlunoBase):
     pass
@@ -24,6 +25,7 @@ class Aluno(AlunoBase):
     endereco: str
     instituicaoEnsino: str
     curso: str
+    saldo: int
 
     class Config:
         orm_mode = True

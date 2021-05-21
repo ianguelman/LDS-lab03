@@ -11,6 +11,7 @@ const Empresas = lazy(() => import('../pages/Empresas'));
 const EmpresasRegister = lazy(() => import('../pages/EmpresasRegister'));
 const Vantagens = lazy(() => import('../pages/Vantagens'));
 const Login = lazy(() => import('../pages/Login'));
+// const Saldo = lazy(() => import('../pages/Saldo'));
 // const VantagensRegister = lazy(() => import('../pages/VantagensRegister'));
 
 function Routes() {
@@ -26,6 +27,7 @@ function Routes() {
         {/* <Route exact path="/registrar/vantagens" component={VantagensRegister} /> */}
         <Route exact path="/vizualizar/vantagens" component={Vantagens} />
         <Route exact path="/login" component={Login} />
+        {/* <Route exact path="/saldo" component={Saldo} /> */}
       </Suspense>
     </BrowserRouter>
   );

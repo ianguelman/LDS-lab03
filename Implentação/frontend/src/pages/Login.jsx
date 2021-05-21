@@ -1,17 +1,28 @@
 import React, { useState, useEffect } from 'react'
 
-import { TextField, Card, Paper, Typography, Button } from '@material-ui/core';
+import { TextField, Card, Typography, Button } from '@material-ui/core';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
 import './Register.sass'
 
 import api from '../api';
 
 export default function Login() {
-    const [userType, setUserType] = userState(); 
+
+    const usertypes = [
+        { title: 'Aluno', type: 'aluno' },
+        { title: 'Professor', type: 'professor' },
+        { title: 'Empresa', type: 'empresa' }
+    ]
+
+    const [value, setValue] = React.useState(usertypes[0]);
+    const [inputValue, setInputValue] = React.useState('');
+
     const [user, setUser] = useState(
         {
             login: "",
-            senha: "",
-            type: ""
+            password: "",
+            tipo: ""
         }
     );
     async function handleStoreUser(e) {
@@ -21,9 +32,10 @@ export default function Login() {
             window.alert("Usuário logado com sucesso!");
             window.location.href = '/saldo';
         } catch {
-            window.alert("Erro no cadastro do user!");
+            window.alert("Erro no login!");
         }
     }
+
     return (
         <div className="page">
             <Typography color="primary" variant="h4" align="left">Login</Typography>
@@ -31,24 +43,33 @@ export default function Login() {
                 <form onSubmit={handleStoreUser}>
                     <TextField
                         variant="outlined"
-                        placeholder="CPF"
-                        value={user.cpf}
-                        onChange={(e) => setUser({ ...user, cpf: e.target.value })}
-                    />
-                    <TextField
-                        variant="outlined"
-                        placeholder="Username"
+                        placeholder="Login"
                         value={user.login}
                         onChange={(e) => setUser({ ...user, login: e.target.value })}
                     />
                     <TextField
                         variant="outlined"
-                        placeholder="Email"
-                        value={aluno.type}
-                        onChange={(e) => setUser({ ...aluno, email: e.target.value })}
+                        placeholder="Senha"
+                        value={user.senha}
+                        onChange={(e) => setUser({ ...user, senha: e.target.value })}
                     />
-
-                    <Button color="primary" type="submit"align="center">REGISTRAR</Button>
+                    <Autocomplete
+                        id="user-tipo"
+                        options={usertypes}
+                        getOptionLabel={(usertypes) => usertypes.title}
+                        value={value}
+                        onChange={(event, newValue) => {
+                            setValue(newValue)
+                            setUser({ ...user, tipo: value.type })
+                        }}
+                        inputValue={inputValue}
+                        onInputChange={(event, newInputValue) => {
+                            setInputValue(newInputValue)
+                            setUser({ ...user, tipo: value.type })
+                        }}
+                        renderInput={(params) => <TextField {...params} label="Selecionar tipo" variant="outlined" />}
+                        />
+                    <Button color="primary" type="submit"align="center">Logar</Button>
                 </form>
                 
             </Card>

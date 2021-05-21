@@ -8,6 +8,7 @@ class ProfessorBase(BaseModel):
     senha: str
     instituicaoEnsino: str
     departamento: str
+    saldo: int
 
 class ProfessorCreate(ProfessorBase):
     pass
@@ -18,6 +19,7 @@ class Professor(ProfessorBase):
     senha: str
     instituicaoEnsino: str
     departamento: str
+    saldo: int
 
     class Config:
         orm_mode = True

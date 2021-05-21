@@ -15,7 +15,8 @@ export default function AlunosRegister() {
             rg: "",
             endereco: "",
             instituicaoEnsino: "",
-            curso: ""
+            curso: "",
+            saldo: ""
         }
     );
     async function handleStoreAluno(e) {
@@ -80,7 +81,12 @@ export default function AlunosRegister() {
                         value={aluno.curso}
                         onChange={(e) => setAluno({ ...aluno, curso: e.target.value })}
                     />
-
+                    <TextField
+                        variant="outlined"
+                        placeholder="Saldo"
+                        value={aluno.saldo}
+                        onChange={(e) => setAluno({ ...aluno, saldo: e.target.value })}
+                    />
                     <Button color="primary" type="submit"align="center">REGISTRAR</Button>
                 </form>
                 

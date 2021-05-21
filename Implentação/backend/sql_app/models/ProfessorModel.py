@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, Integer
 
 
 from ..database import Base
@@ -14,5 +14,6 @@ class Professor(Base):
     senha = Column(String)
     instituicaoEnsino = Column(String)
     departamento = Column(String)
+    saldo = Column(Integer)
 
     # items = relationship("Item", back_populates="owner")

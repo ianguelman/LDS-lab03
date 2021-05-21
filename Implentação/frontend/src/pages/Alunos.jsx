@@ -80,6 +80,14 @@ export default function Alunos() {
                                 }
                             </Typography>
                         </div>
+
+                        <div className="new-experience">
+                            <Typography color="primary" variant="h6" align="left">
+                                {
+                                "Saldo: " + aluno.saldo
+                                }
+                            </Typography>
+                        </div>
                     </Card> 
                 ))
             }
