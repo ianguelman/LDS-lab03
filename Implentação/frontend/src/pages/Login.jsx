@@ -44,6 +44,7 @@ export default function Login() {
             const response = await api.post('/login', user);
             if (response.data.response === "true") {
                 window.alert("Usuário logado com sucesso!");
+                window.localStorage.setItem('user', JSON.stringify(user));
                 window.location.href = '/saldo';
             } 
         } catch {

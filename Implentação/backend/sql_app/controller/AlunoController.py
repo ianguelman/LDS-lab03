@@ -7,7 +7,7 @@ def get_alunos(db: Session, skip: int = 0, limit: int = 100):
     return db.query(AlunoModel.Aluno).offset(skip).limit(limit).all()
 
 def get_aluno(db: Session, login: str):
-    return db.query(AlunoModel.Aluno).get(login)
+    return db.query(AlunoModel.Aluno).filter(AlunoModel.Aluno.login == login).all()[0]
 
 def create_aluno(db: Session, aluno: AlunoSchema.AlunoCreate):
     db_aluno = AlunoModel.Aluno(

@@ -90,4 +90,9 @@ def login(user: User, db: Session = Depends(get_db)):
 def transacao(transacao: TransacaoSchema.TransacaoCreate, db: Session = Depends(get_db)):
    return TransacaoController.create_transacao(db, transacao)
 
-    
+@app.post("/saldo/")
+def saldo(user: User, db: Session = Depends(get_db)):
+    if user.tipo == 'professor':
+        return {'saldo': ProfessorController.get_professor(db, user.login).saldo}
+    elif user.tipo == 'aluno':
+        return {'saldo': AlunoController.get_aluno(db, user.login).saldo}

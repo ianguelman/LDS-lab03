@@ -7,7 +7,7 @@ def get_professores(db: Session, skip: int = 0, limit: int = 100):
     return db.query(ProfessorModel.Professor).offset(skip).limit(limit).all()
 
 def get_professor(db: Session,  login: str):
-    return db.query(ProfessorModel.Professor).get(login)
+    return db.query(ProfessorModel.Professor).filter(ProfessorModel.Professor.login == login).all()[0]
 
 def create_professor(db: Session, professor: ProfessorSchema.ProfessorCreate):
     db_professor = ProfessorModel.Professor(

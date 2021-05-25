@@ -14,7 +14,6 @@ def get_transacaoes(db: Session, skip: int = 0, limit: int = 100):
 
 def create_transacao(db: Session, transacao: TransacaoSchema.TransacaoCreate):
     db_transacao = TransacaoModel.Transacao(
-        id = transacao.id,
         loginAluno = transacao.loginAluno, 
         loginProfessor = transacao.loginProfessor,
         valor = transacao.valor,
