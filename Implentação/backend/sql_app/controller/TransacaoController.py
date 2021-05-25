@@ -5,6 +5,8 @@ from ..models.schemas import TransacaoSchema, AlunoSchema, ProfessorSchema
 
 from ..controller import AlunoController, ProfessorController
 
+from ..view import User
+
 
 from fastapi.encoders import jsonable_encoder
 from typing import List
@@ -12,28 +14,30 @@ from typing import List
 def get_transacaoes(db: Session, skip: int = 0, limit: int = 100):
     return db.query(TransacaoModel.Transacao).offset(skip).limit(limit).all()
 
-def create_transacao(db: Session, transacao: TransacaoSchema.TransacaoCreate):
+def create_transacao(db: Session, transacao: TransacaoSchema.TransacaoCreate, user: User):
+    # transacao?permuta=true
+    # permuta == true => aluno x aluno
     db_transacao = TransacaoModel.Transacao(
-        loginAluno = transacao.loginAluno, 
-        loginProfessor = transacao.loginProfessor,
+        loginDestinatario = transacao.loginDestinatario, 
+        loginRemetente = transacao.loginRemetente,
         valor = transacao.valor,
-    )
-    db_aluno = creditAluno(db, transacao.loginAluno, transacao.valor)
-    db_professor = debitProfessor(db, transacao.loginProfessor, transacao.valor)
+        motivo = transacao.motivo, )
+    creditAluno(db, transacao.loginDestinatario, transacao.valor)
+    debit(db, transacao.loginRemetente, transacao.valor, user.tipo)
     db.add(db_transacao)
     db.commit()
     db.refresh(db_transacao)
     return db_transacao
 
-def debitAluno(db: Session, loginAluno: str, valor: float):
-    return db.query(AlunoModel.Aluno).filter(AlunoModel.Aluno.login == loginAluno)\
-        .update({AlunoModel.Aluno.saldo: AlunoModel.Aluno.saldo - valor}, synchronize_session = False)
+def debit(db: Session, loginRemetente: str, valor: float, tipo: str):
+    if tipo == "aluno":
+        return db.query(AlunoModel.Aluno).filter(AlunoModel.Aluno.login == loginRemetente)\
+            .update({AlunoModel.Aluno.saldo: AlunoModel.Aluno.saldo - valor}, synchronize_session = False)
+    elif tipo == "professor":
+        return db.query(ProfessorModel.Professor).filter(ProfessorModel.Professor.login == loginRemetente)\
+            .update({ProfessorModel.Professor.saldo: ProfessorModel.Professor.saldo - valor}, synchronize_session = False)
 
 
-def creditAluno(db: Session, loginAluno: str, valor: float):
-    return db.query(AlunoModel.Aluno).filter(AlunoModel.Aluno.login == loginAluno)\
+def creditAluno(db: Session, loginDestinatario: str, valor: float):
+    return db.query(AlunoModel.Aluno).filter(AlunoModel.Aluno.login == loginDestinatario)\
         .update({AlunoModel.Aluno.saldo: AlunoModel.Aluno.saldo + valor}, synchronize_session = False)
-
-def debitProfessor(db: Session, loginProfessor: str, valor: float):
-    return db.query(ProfessorModel.Professor).filter(ProfessorModel.Professor.login == loginProfessor)\
-        .update({ProfessorModel.Professor.saldo: ProfessorModel.Professor.saldo - valor}, synchronize_session = False)

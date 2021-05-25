@@ -87,8 +87,8 @@ def login(user: User, db: Session = Depends(get_db)):
     return {'response':'false'}
 
 @app.post("/transacao/")
-def transacao(transacao: TransacaoSchema.TransacaoCreate, db: Session = Depends(get_db)):
-   return TransacaoController.create_transacao(db, transacao)
+def transacao(transacao: TransacaoSchema.TransacaoCreate, user: User, db: Session = Depends(get_db)):
+   return TransacaoController.create_transacao(db, transacao, user)
 
 @app.post("/saldo/")
 def saldo(user: User, db: Session = Depends(get_db)):

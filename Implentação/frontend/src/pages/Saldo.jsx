@@ -7,8 +7,7 @@ export default function Saldo() {
     const [value, setValue] = useState(0);
     const [saldo, setSaldo] = useState(0);
     const [alunos, setAlunos] = useState([{}]);
-
-    const [transaction, setTransaction] = useState();
+    const [motivo, setMotivo] = useState("")
 
     async function getSaldo() {
       const response = await api.post('/saldo/', JSON.parse(window.localStorage.getItem('user')));
@@ -30,15 +29,22 @@ export default function Saldo() {
       didMount()
     }, [])
 
-    function defineTransaction(value){
-      setValue(value)
-      setTransaction(
+    function defineTransaction(){
+      return(
         {
-          'id': 0,
-          'loginProfessor': JSON.parse(window.localStorage.getItem('user')).login,
-          'loginAluno': loginAluno,
-          'valor': value       
+          id: 0,
+          loginRemetente: JSON.parse(window.localStorage.getItem('user')).login,
+          loginDestinatario: loginAluno,
+          valor: value,
+          motivo: motivo,   
         })
+    }
+
+    function verifyDataIntegrity() {
+      if (value < 0 || value > saldo) {
+        return false;
+      }
+      return true;
     }
 
     return (
@@ -50,7 +56,6 @@ export default function Saldo() {
         <div>
         <FormControl variant="outlined" className="form">
         {
-        JSON.parse(window.localStorage.getItem('user')).tipo == 'professor' &&
         <>
           <InputLabel htmlFor="outlined-age-native-simple">Aluno a receber:</InputLabel>
             <Select
@@ -70,15 +75,32 @@ export default function Saldo() {
             </Select>
             <TextField 
               value={value}
+              type="number"
               onChange={(event)=>{
-                defineTransaction(event.target.value)
+                setValue(event.target.value)
                 }}
               variant="outlined"
               placeholder="Valor"/>
-            <Button onClick={()=>{
-                api.post('/transacao', transaction);
-                alert('Transação feita com sucesso!');
-                window.location.reload()
+              <TextField 
+              value={motivo}
+              onChange={(event)=>{
+                setMotivo(event.target.value)
+                }}
+              variant="outlined"
+              placeholder="Motivo"/>
+            <Button onClick={async ()=>{
+                console.log({transacao: defineTransaction(), user: JSON.parse(window.localStorage.getItem('user'))})
+                if (verifyDataIntegrity()) {
+                  try {
+                    await api.post('/transacao', {transacao: defineTransaction(), user: JSON.parse(window.localStorage.getItem('user'))});
+                    alert('Transação feita com sucesso!');
+                    window.location.reload()
+                  } catch {
+                    alert('Erro na transação')
+                  }
+                } else {
+                  alert('Valor inválido! Verifique se se possui saldo suficiente ou se é um valor inteiro positivo');
+                }
             }}>Transferir </Button>
           </>
         }

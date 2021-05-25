@@ -10,8 +10,9 @@ class Transacao(Base):
     __tablename__ = "Transacao"
 
     id = Column(Integer, primary_key=True)
-    loginAluno = Column(String)
-    loginProfessor = Column(String)
+    loginDestinatario = Column(String)
+    loginRemetente = Column(String)
     valor = Column(Float)
+    motivo = Column(String)
 
     # items = relationship("Item", back_populates="owner")
