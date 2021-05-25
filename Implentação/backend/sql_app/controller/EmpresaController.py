@@ -11,8 +11,7 @@ def create_empresa(db: Session, empresa: EmpresaSchema.EmpresaCreate):
     db_empresa = EmpresaModel.Empresa(
         cnpj = empresa.cnpj,
         nome = empresa.nome,
-        vantages = empresa.vantages,
-        codigo = empresa.codigo,
+        vantagens = empresa.vantagens,
     )
     db.add(db_empresa)
     db.commit()
