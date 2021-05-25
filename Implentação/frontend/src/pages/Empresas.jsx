@@ -21,7 +21,7 @@ export default function Empresas() {
         didMount();
     }, []);
     return (
-        <div className="empresas">
+        <div className="page empresas">
             {
                 empresas.map((empresa) => (
                     <Card className="flex-to-start account-card" elevation={10}>

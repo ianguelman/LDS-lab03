@@ -44,7 +44,7 @@ export default function Saldo() {
     return (
       saldo && alunos &&
       <>
-        <div className="saldo">
+        <div className="page saldo">
             <h1>Saldo: {saldo}</h1>
         </div>
         <div>

@@ -21,7 +21,7 @@ export default function Alunos() {
         didMount();
     }, []);
     return (
-        <div className="alunos">
+        <div className="page alunos">
             {
                 alunos.map((aluno) => (
                     <Card className="flex-to-start account-card" elevation={10}>

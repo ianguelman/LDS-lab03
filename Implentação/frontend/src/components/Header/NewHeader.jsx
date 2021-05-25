@@ -22,6 +22,8 @@ import Routes from '../../routes/Routes.jsx';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import SchoolIcon from '@material-ui/icons/School';
+import BusinessIcon from '@material-ui/icons/Business';
+import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 
 // Tamanho do menu lateral
 const drawerWidth = 240;
@@ -151,6 +153,15 @@ export default function PersistentDrawerLeft() {
             </ListItemLink>
             <ListItemLink href="/registrar/professores">
               <ListItemIcon><PersonOutlineIcon/></ListItemIcon><ListItemText primary={"Registrar Professores"}/>
+            </ListItemLink>
+            <ListItemLink href="/vizualizar/empresas">
+              <ListItemIcon><BusinessIcon/></ListItemIcon><ListItemText primary={"Vizualizar Empresas"}/>
+            </ListItemLink>
+            <ListItemLink href="/registrar/empresas">
+              <ListItemIcon><BusinessIcon/></ListItemIcon><ListItemText primary={"Registrar Empresas"}/>
+            </ListItemLink>
+            <ListItemLink href="/saldo">
+              <ListItemIcon><AccountBalanceWalletIcon/></ListItemIcon><ListItemText primary={"Saldo/Transferências"}/>
             </ListItemLink>
         </List>
         <Divider />
