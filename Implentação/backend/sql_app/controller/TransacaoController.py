@@ -41,3 +41,7 @@ def debit(db: Session, loginRemetente: str, valor: float, tipo: str):
 def creditAluno(db: Session, loginDestinatario: str, valor: float):
     return db.query(AlunoModel.Aluno).filter(AlunoModel.Aluno.login == loginDestinatario)\
         .update({AlunoModel.Aluno.saldo: AlunoModel.Aluno.saldo + valor}, synchronize_session = False)
+
+def get_extrato(db: Session, login: str):
+    return db.query(TransacaoModel.Transacao).filter(TransacaoModel.Transacao.loginRemetente == login or TransacaoModel.Transacao.loginDestinatario == login).all()
+

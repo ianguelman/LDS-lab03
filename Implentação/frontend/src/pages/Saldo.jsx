@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import api from '../api';
 import { FormControl, InputLabel, Select, TextField, Button } from '@material-ui/core';
+import Extrato from '../components/Extrato/Extrato';
 export default function Saldo() {
     
     const [loginAluno, setLoginAluno] = useState("");
@@ -106,6 +107,9 @@ export default function Saldo() {
         }
         </FormControl>
         </div>
+
+        <h1>Extrato</h1>
+        <Extrato />
       </>
     )
 }

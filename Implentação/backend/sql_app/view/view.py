@@ -96,3 +96,7 @@ def saldo(user: User, db: Session = Depends(get_db)):
         return {'saldo': ProfessorController.get_professor(db, user.login).saldo}
     elif user.tipo == 'aluno':
         return {'saldo': AlunoController.get_aluno(db, user.login).saldo}
+
+@app.post("/extrato/")
+def transacao(user: User, db: Session = Depends(get_db)):
+   return TransacaoController.get_extrato(db, user.login)
