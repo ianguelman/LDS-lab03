@@ -8,7 +8,9 @@ export default function VantagensRegister() {
             custo: "",
             descricao: "",
             foto: "",
-            loginEmpresa: JSON.parse(window.localStorage.getItem('user')).login 
+            loginEmpresa: JSON.parse(window.localStorage.getItem('user')).login,
+            resgatadoPor: null,
+            id:9,
         }
     );
     async function handleStoreVantagem(e) {
