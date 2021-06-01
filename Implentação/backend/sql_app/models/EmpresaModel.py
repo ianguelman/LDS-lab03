@@ -8,7 +8,9 @@ class Empresa(Base):
 
     cnpj = Column(String, index=True, primary_key=True)
     nome = Column(String)
-    vantagens = Column(Integer)
+    login = Column(String)
+    senha = Column(String)
+
     # owner_id = Column(Integer, ForeignKey("users.id"))
 
     # owner = relationship("User", back_populates="items")

@@ -6,8 +6,9 @@ class VantagemBase(BaseModel):
     custo: float
     descricao: str
     foto: str
-    codigo: str
-    codigoEmpresa: str
+    id: int
+    loginEmpresa: str
+    resgatadoPor: Optional[str]
 
 class VantagemCreate(VantagemBase):
     pass
@@ -16,8 +17,9 @@ class Vantagem(VantagemBase):
     custo: float
     descricao: str
     foto: str
-    codigo: str
-    codigoEmpresa: str
+    id: int
+    loginEmpresa: str
+    resgatadoPor: Optional[str]
 
     class Config:
         orm_mode = True

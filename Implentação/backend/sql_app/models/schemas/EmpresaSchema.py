@@ -5,7 +5,8 @@ from pydantic import BaseModel
 class EmpresaBase(BaseModel):
     cnpj: str
     nome: str
-    vantagens: int
+    login: str
+    senha: str
 
 class EmpresaCreate(EmpresaBase):
     pass
@@ -13,7 +14,8 @@ class EmpresaCreate(EmpresaBase):
 class Empresa(EmpresaBase):
     cnpj: str
     nome: str
-    vantagens: int
+    login: str
+    senha: str
 
     class Config:
         orm_mode = True

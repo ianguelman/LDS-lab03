@@ -15,14 +15,13 @@ def get_transacaoes(db: Session, skip: int = 0, limit: int = 100):
     return db.query(TransacaoModel.Transacao).offset(skip).limit(limit).all()
 
 def create_transacao(db: Session, transacao: TransacaoSchema.TransacaoCreate, user: User):
-    # transacao?permuta=true
-    # permuta == true => aluno x aluno
     db_transacao = TransacaoModel.Transacao(
         loginDestinatario = transacao.loginDestinatario, 
         loginRemetente = transacao.loginRemetente,
         valor = transacao.valor,
         motivo = transacao.motivo, )
-    creditAluno(db, transacao.loginDestinatario, transacao.valor)
+    if "RESGATE" not in transacao.motivo: 
+        creditAluno(db, transacao.loginDestinatario, transacao.valor)
     debit(db, transacao.loginRemetente, transacao.valor, user.tipo)
     db.add(db_transacao)
     db.commit()
@@ -43,5 +42,5 @@ def creditAluno(db: Session, loginDestinatario: str, valor: float):
         .update({AlunoModel.Aluno.saldo: AlunoModel.Aluno.saldo + valor}, synchronize_session = False)
 
 def get_extrato(db: Session, login: str):
-    return db.query(TransacaoModel.Transacao).filter(TransacaoModel.Transacao.loginRemetente == login or TransacaoModel.Transacao.loginDestinatario == login).all()
+    return db.query(TransacaoModel.Transacao).filter(TransacaoModel.Transacao.loginRemetente == login).all() + db.query(TransacaoModel.Transacao).filter(TransacaoModel.Transacao.loginDestinatario == login).all()
 

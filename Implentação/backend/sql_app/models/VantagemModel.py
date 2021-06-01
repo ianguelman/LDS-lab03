@@ -5,8 +5,9 @@ class Vantagem(Base):
 
     __tablename__ = "Vantagem"
 
-    codigo = Column(Integer, primary_key=True, index=True)
-    codigoEmpresa = Column(Integer, ForeignKey("Empresa.codigo"))
+    id = Column(Integer, primary_key=True)
+    loginEmpresa = Column(String)
     custo = Column(DECIMAL(precision=10, scale=2))
     descricao = Column(String)
     foto = Column(String)
+    resgatadoPor = Column(String, nullable=True)

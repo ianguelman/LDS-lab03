@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
-import { TextField, Card, Paper, Typography, Button } from '@material-ui/core';
+import { TextField, Card, Typography, Button, Select } from '@material-ui/core';
 import './Register.sass'
 
 import api from '../api';
@@ -11,10 +11,13 @@ export default function ProfessoresRegister() {
             login: "",
             senha: "",
             cpf: "",
-            intituicaoEnsino: "",
+            instituicaoEnsino: "",
             departamento: ""
         }
     );
+
+    const instituicoes = ["PUC MG", "PUC Rio", "UFRS", "USP", "FAVESP", "UNIESQUINA", "UFMG", "IBMEC" ]   
+
     async function handleStoreProfessor(e) {
         e.preventDefault();
         try {
@@ -41,12 +44,21 @@ export default function ProfessoresRegister() {
                         value={professor.cpf}
                         onChange={(e) => setProfessor({ ...professor, cpf: e.target.value })}
                     />
-                    <TextField
+                    <Select
+                        native
+                        value={professor.instituicaEnsino}
+                        onChange={(e)=>{
+                            setProfessor({ ...professor, instituicaoEnsino: e.target.value })
+                        }}
+                        label="Instituição de Ensino"
+                        inputProps={{
+                            name: 'instituicaoEnsino',
+                            id: 'outlined-age-native-simple',
+                        }}
                         variant="outlined"
-                        placeholder="Instituição de Ensino"
-                        value={professor.instituicaoEnsino}
-                        onChange={(e) => setProfessor({ ...professor, instituicaoEnsino: e.target.value })}
-                    />
+                        >
+                        {instituicoes.map((instituicao => <option key={instituicao} value={instituicao}>{instituicao}</option>))}
+                    </Select>
                     <TextField
                         variant="outlined"
                         placeholder="Departamento"

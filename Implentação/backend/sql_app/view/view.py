@@ -10,6 +10,7 @@ from ..models import AlunoModel, EmpresaModel, ProfessorModel, VantagemModel, Tr
 from ..models.schemas import AlunoSchema, EmpresaSchema, ProfessorSchema, VantagemSchema, TransacaoSchema
 
 from .User import User
+from .Resgate import Resgate
 
 AlunoModel.Base.metadata.create_all(bind=engine)
 EmpresaModel.Base.metadata.create_all(bind=engine)
@@ -69,8 +70,23 @@ def create_vantagem(vantagem: VantagemSchema.VantagemCreate, db: Session = Depen
 
 @app.get("/vantagens/", response_model=List[VantagemSchema.Vantagem])
 def read_vantagens(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    vantagens = VantagemController.get_vantagens(db, skip=skip, limit=limit)
-    return vantagens
+    return VantagemController.get_vantagens(db, skip=skip, limit=limit)
+
+@app.post("/vantagens/resgatar")
+def resgatar_vantagem(resgate: Resgate, db: Session = Depends(get_db)):
+    VantagemController.resgatarVantagem(db, resgate.resgatadoPor, resgate.idVantagem)
+    transacao = TransacaoModel.Transacao(
+        loginDestinatario = resgate.destinatario, 
+        loginRemetente = resgate.resgatadoPor,
+        valor = resgate.custo,
+        motivo = "RESGATE - " + resgate.descricao, )
+    user = User(
+        tipo = "aluno",
+        login = resgate.resgatadoPor,
+        password = ""
+    )
+    TransacaoController.create_transacao(db, transacao, user)
+    return True
 
 @app.post("/login/")
 def login(user: User, db: Session = Depends(get_db)):
@@ -78,7 +94,8 @@ def login(user: User, db: Session = Depends(get_db)):
         data = ProfessorController.get_professores(db, skip=0, limit=100)
     elif user.tipo == 'aluno':
         data = AlunoController.get_alunos(db, skip=0, limit=100)
-    # elif user.tipo == 'empresa':
+    elif user.tipo == 'empresa':
+        data = EmpresaController.get_empresas(db, skip=0, limit=100)
 
     for item in data:
         if item.login == user.login and item.senha == user.password:

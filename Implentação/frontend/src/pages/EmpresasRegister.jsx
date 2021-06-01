@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
-import { TextField, Card, Paper, Typography, Button } from '@material-ui/core';
+import { TextField, Card, Typography, Button } from '@material-ui/core';
 import './Register.sass'
 
 import api from '../api';
@@ -10,7 +10,8 @@ export default function EmpresasRegister() {
         {
             cnpj: "",
             nome: "",
-            vantagens: 0
+            senha: "",
+            login:"",
         }
     );
     async function handleStoreEmpresa(e) {
@@ -38,6 +39,18 @@ export default function EmpresasRegister() {
                         placeholder="Nome Fantasia"
                         value={empresa.nome}
                         onChange={(e) => setEmpresa({ ...empresa, nome: e.target.value })}
+                    />
+                    <TextField
+                        variant="outlined"
+                        placeholder="Login"
+                        value={empresa.login}
+                        onChange={(e) => setEmpresa({ ...empresa, login: e.target.value })}
+                    />
+                    <TextField
+                        variant="outlined"
+                        placeholder="Password"
+                        value={empresa.password}
+                        onChange={(e) => setEmpresa({ ...empresa, password: e.target.value })}
                     />
 
                     <Button color="primary" type="submit"align="center">REGISTRAR</Button>

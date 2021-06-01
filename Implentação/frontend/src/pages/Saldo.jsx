@@ -65,9 +65,9 @@ export default function Saldo() {
               onChange={(event)=>{
                 setLoginAluno(event.target.value)
               }}
-              label="Age"
+              label="Login"
               inputProps={{
-                name: 'age',
+                name: 'login',
                 id: 'outlined-age-native-simple',
               }}
             >
@@ -108,7 +108,6 @@ export default function Saldo() {
         </FormControl>
         </div>
 
-        <h1>Extrato</h1>
         <Extrato />
       </>
     )

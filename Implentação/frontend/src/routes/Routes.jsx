@@ -10,9 +10,9 @@ const ProfessoresRegister = lazy(() => import('../pages/ProfessoresRegister'));
 const Empresas = lazy(() => import('../pages/Empresas'));
 const EmpresasRegister = lazy(() => import('../pages/EmpresasRegister'));
 const Vantagens = lazy(() => import('../pages/Vantagens'));
+const VantagensRegister = lazy(() => import('../pages/VantagensRegister'));
 const Login = lazy(() => import('../pages/Login'));
 const Saldo = lazy(() => import('../pages/Saldo'));
-// const VantagensRegister = lazy(() => import('../pages/VantagensRegister'));
 
 function Routes() {
   return (
@@ -24,7 +24,7 @@ function Routes() {
         <Route exact path="/vizualizar/empresas" component={Empresas} />
         <Route exact path="/registrar/professores" component={ProfessoresRegister} />
         <Route exact path="/vizualizar/professores" component={Professores} />
-        {/* <Route exact path="/registrar/vantagens" component={VantagensRegister} /> */}
+        <Route exact path="/registrar/vantagens" component={VantagensRegister} />
         <Route exact path="/vizualizar/vantagens" component={Vantagens} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/saldo" component={Saldo} />

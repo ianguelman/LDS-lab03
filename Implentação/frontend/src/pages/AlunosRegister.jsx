@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
-import { TextField, Card, Paper, Typography, Button } from '@material-ui/core';
+import { TextField, Card, Typography, Button, Select } from '@material-ui/core';
 import './Register.sass'
 
 import api from '../api';
@@ -19,6 +19,9 @@ export default function AlunosRegister() {
             saldo: ""
         }
     );
+
+    const instituicoes = ["PUC MG", "PUC Rio", "UFRS", "USP", "FAVESP", "UNIESQUINA", "UFMG", "IBMEC" ]    
+
     async function handleStoreAluno(e) {
         e.preventDefault();
         try {
@@ -69,12 +72,21 @@ export default function AlunosRegister() {
                         value={aluno.endereco}
                         onChange={(e) => setAluno({ ...aluno, endereco: e.target.value })}
                     />
-                    <TextField
+                    <Select
+                        native
+                        value={aluno.instituicaEnsino}
+                        onChange={(e)=>{
+                            setAluno({ ...aluno, instituicaoEnsino: e.target.value })
+                        }}
+                        label="Instituição de Ensino"
+                        inputProps={{
+                            name: 'instituicaoEnsino',
+                            id: 'outlined-age-native-simple',
+                        }}
                         variant="outlined"
-                        placeholder="Instituição de ensino"
-                        value={aluno.instituicaoEnsino}
-                        onChange={(e) => setAluno({ ...aluno, instituicaoEnsino: e.target.value })}
-                    />
+                        >
+                        {instituicoes.map((instituicao => <option key={instituicao} value={instituicao}>{instituicao}</option>))}
+                    </Select>
                     <TextField
                         variant="outlined"
                         placeholder="Curso"
